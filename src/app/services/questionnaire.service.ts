@@ -1,45 +1,38 @@
 import { Injectable } from '@angular/core';
-import { IQuestion } from '../interfaces/question.interface';
+import { IQuestion, IQuestionPart } from '../interfaces/question.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionnaireService {
 
-  questionnaireData: IQuestion[] = [
-    {
-      id: 1,
-      questionText: 'question 1',
-      type: 'single choice',
-      answers: 'answer 1',
-      creationDate: new Date
-    },
-    {
-      id: 2,
-      questionText: 'question 2',
-      type: 'multiple choice',
-      answers: ['answer a', 'answer b'],
-      creationDate: new Date
-    },
-    {
-      id: 3,
-      questionText: 'question 3',
-      type: 'open',
-      answers: 'open answer 3',
-      creationDate: new Date
-    },
-  ];
+  questionnaireData: IQuestion[] = [];
 
-  constructor() {
-  }
-
-  deleteQuestion(id: number):IQuestion[] {
+  deleteQuestion(id: number): IQuestion[] {
     this.questionnaireData = this.questionnaireData.filter(item => item.id !== id);
-    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData))
-    return this.questionnaireData
+    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
+    return [...this.questionnaireData];
   }
-  addQuestion(question:IQuestion){
-    this.questionnaireData.push(question)
-    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData))
+
+  addQuestion(newQuestion: IQuestionPart) {
+    let newId;
+    if (this.questionnaireData.length) {
+      newId = this.questionnaireData[0].id + 1;
+    } else {
+      newId = 1;
+    }
+    let tempQuestion = { id: newId, ...newQuestion, answers: [], creationDate: new Date() };
+    this.questionnaireData.unshift(tempQuestion);
+    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
+  }
+
+  editQuestion(editedQuestion: IQuestionPart, editedId: number) {
+    let tempQuestion = { id: editedId, ...editedQuestion, answers: [], creationDate: new Date() };
+    this.questionnaireData.forEach((item, index) => {
+      if (item.id === editedId) {
+        this.questionnaireData[index] = tempQuestion;
+      }
+    });
+    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
   }
 }

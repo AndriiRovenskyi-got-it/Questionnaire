@@ -9,7 +9,7 @@
     </label>
     </div>
     <div class="column-center">
-      <button type="submit">add question</button>
+      <button [disabled]="form.invalid" type="submit">save</button>
     </div>
   </form>
 </div>

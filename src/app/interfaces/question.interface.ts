@@ -3,5 +3,10 @@ export interface IQuestion {
   questionText: string;
   type: string;
   answers: string | string[];
-  creationDate:Date
+  creationDate: Date;
+}
+
+export interface IQuestionPart {
+  questionText: string;
+  type: string;
 }
