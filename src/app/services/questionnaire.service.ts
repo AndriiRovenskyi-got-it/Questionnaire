@@ -35,6 +35,11 @@ export class QuestionnaireService {
 
   deleteQuestion(id: number):IQuestion[] {
     this.questionnaireData = this.questionnaireData.filter(item => item.id !== id);
+    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData))
     return this.questionnaireData
+  }
+  addQuestion(question:IQuestion){
+    this.questionnaireData.push(question)
+    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData))
   }
 }

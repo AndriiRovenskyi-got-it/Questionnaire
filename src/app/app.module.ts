@@ -7,6 +7,7 @@ import { QuestionManagementPageComponent } from './components/question-managemen
 import { CreateQuestionPageComponent } from './components/create-question-page/create-question-page.component';
 import { QuestionEditPageComponent } from './components/question-edit-page/question-edit-page.component';
 import { QuestionsListsPageComponent } from './components/questions-lists-page/questions-lists-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { QuestionsListsPageComponent } from './components/questions-lists-page/q
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

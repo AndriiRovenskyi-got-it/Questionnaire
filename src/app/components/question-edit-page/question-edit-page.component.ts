@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IQuestion } from '../../interfaces/question.interface';
 
 @Component({
   selector: 'app-question-edit-page',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionEditPageComponent implements OnInit {
 
-  constructor() { }
+  question: IQuestion = history.state.question;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+
   }
 
 }

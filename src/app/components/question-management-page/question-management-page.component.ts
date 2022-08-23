@@ -15,6 +15,10 @@ export class QuestionManagementPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('questionnaireData')) {
+      this.questionnaireData = JSON.parse(localStorage.getItem('questionnaireData')!);
+      this.questionnaireService.questionnaireData = JSON.parse(localStorage.getItem('questionnaireData')!);
+    }
     this.questionnaireData = this.questionnaireService.questionnaireData.reverse();
   }
 }

@@ -1,10 +1,8 @@
 @import "src/assets/styles/mixins";
 
 .management {
-  @include flex(column, center, center);
 
   &__nav-btn {
-    @include flex(row, center, center);
     gap: 20px;
   }
 
@@ -17,6 +15,6 @@
   }
 
   &__question {
-    @include flex(row, space-between, center);
+
   }
 }

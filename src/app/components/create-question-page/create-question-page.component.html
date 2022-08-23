@@ -1,1 +1,15 @@
-<p>create-question-page works!</p>
+<div class="create column-center">
+  <button routerLink='/management-question'>question management</button>
+  <form class="create__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="questionText">
+    <div class="column-start create__radio-div">
+      <label *ngFor="let type of types">
+      <input name="type" type="radio" [value]="type" formControlName="type">
+      {{type}}
+    </label>
+    </div>
+    <div class="column-center">
+      <button type="submit">add question</button>
+    </div>
+  </form>
+</div>

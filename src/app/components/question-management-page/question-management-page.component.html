@@ -1,10 +1,10 @@
-<div class="management">
-  <div class="management__nav-btn">
+<div class="management column-center">
+  <div class="management__nav-btn row-center">
     <button routerLink='/create-question'>create question</button>
     <button routerLink='/list-question'>question list</button>
   </div>
   <div class="management__question-list">
-    <div class="management__question" *ngFor="let question of questionnaireData ">
+    <div class="management__question row-space-between" *ngFor="let question of questionnaireData ">
       <p>{{question.questionText}}-{{question.type}}-{{question.creationDate|date: 'medium' }}</p>
       <div class="management__button-div">
         <button [routerLink]="['/edit-question']" [state]="{question:question}">edit</button>
