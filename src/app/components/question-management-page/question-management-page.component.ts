@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionnaireService } from '../../services/questionnaire.service';
+import { IQuestion } from '../../interfaces/question.interface';
 
 @Component({
   selector: 'app-question-management-page',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionManagementPageComponent implements OnInit {
 
-  constructor() { }
+  questionnaireData!: IQuestion[];
 
-  ngOnInit(): void {
+  constructor(public questionnaireService: QuestionnaireService) {
   }
 
+  ngOnInit(): void {
+    this.questionnaireData = this.questionnaireService.questionnaireData.reverse();
+  }
 }
