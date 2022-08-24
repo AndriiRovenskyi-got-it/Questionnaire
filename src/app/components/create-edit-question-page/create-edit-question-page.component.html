@@ -1,15 +1,23 @@
 <div class="create column-center">
   <button routerLink='/management-question'>question management</button>
-  <form class="create__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form class="create__form" [formGroup]="form">
     <input type="text" formControlName="questionText">
     <div class="column-start create__radio-div">
       <label *ngFor="let type of types">
-      <input name="type" type="radio" [value]="type" formControlName="type">
-      {{type}}
-    </label>
+        <input name="type" type="radio" [value]="type" formControlName="type" (change)="onRadioBtnChange(type)">
+        {{type}}
+      </label>
     </div>
+    <ul *ngIf="showAnswersField" formArrayName="answers">
+      <li *ngFor="let answerControl of answersFormArray; let i=index">
+        <span>{{alphabetArray[i]}}</span>
+        <input [formControlName]="i" type="text">
+        <button (click)="removeAnswerControl(i)">delete</button>
+      </li>
+    </ul>
+    <button (click)="addAnswerControl()">add answer</button>
     <div class="column-center">
-      <button [disabled]="form.invalid" type="submit">save</button>
+      <button (click)="onSubmit()" [disabled]="form.invalid" type="submit">save</button>
     </div>
   </form>
 </div>

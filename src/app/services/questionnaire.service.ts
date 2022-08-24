@@ -21,18 +21,29 @@ export class QuestionnaireService {
     } else {
       newId = 1;
     }
-    let tempQuestion = { id: newId, ...newQuestion, answers: [], creationDate: new Date() };
+    let tempQuestion = { id: newId, ...newQuestion, creationDate: new Date() };
+    tempQuestion = this.answersChecker(tempQuestion);
     this.questionnaireData.unshift(tempQuestion);
     localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
   }
 
   editQuestion(editedQuestion: IQuestionPart, editedId: number) {
-    let tempQuestion = { id: editedId, ...editedQuestion, answers: [], creationDate: new Date() };
+    let tempQuestion = { id: editedId, ...editedQuestion, creationDate: new Date() };
+    tempQuestion = this.answersChecker(tempQuestion);
     this.questionnaireData.forEach((item, index) => {
       if (item.id === editedId) {
         this.questionnaireData[index] = tempQuestion;
       }
     });
     localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
+  }
+
+  answersChecker(tempQuestion: IQuestion) {
+    if (tempQuestion.type === 'open') {
+      tempQuestion.answers = [];
+    } else {
+      tempQuestion.answers = tempQuestion.answers.filter(answer => answer !== '');
+    }
+    return tempQuestion;
   }
 }
