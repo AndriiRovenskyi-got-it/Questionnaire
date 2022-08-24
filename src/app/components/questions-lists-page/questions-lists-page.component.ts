@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionnaireService } from '../../services/questionnaire.service';
+import { IQuestion } from '../../interfaces/question.interface';
 
 @Component({
   selector: 'app-questions-lists-page',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionsListsPageComponent implements OnInit {
 
-  constructor() { }
+  questionnaireData!: IQuestion[];
+  alphabetArray = ['A', 'B', 'C', 'D', 'E'];
+
+  constructor(private questionnaireService: QuestionnaireService) {
+  }
 
   ngOnInit(): void {
+    if (localStorage.getItem('questionnaireData')) {
+      this.questionnaireData = JSON.parse(localStorage.getItem('questionnaireData')!);
+    }
   }
 
 }

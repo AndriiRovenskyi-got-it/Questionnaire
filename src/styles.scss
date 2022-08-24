@@ -1,4 +1,7 @@
 @import "src/assets/styles/mixins";
+:root{
+  --box-shadow:rgba(41, 49, 118, 0.18)
+}
 * {
   box-sizing: border-box;
 }
@@ -12,6 +15,12 @@
 .row-center{
   @include flex(row, center, center);
 }
+.row-start{
+  @include flex(row, start, center);
+}
 .row-space-between{
   @include flex(row, space-between, center);
+}
+.row-align-top{
+  @include flex(row, center, top);
 }

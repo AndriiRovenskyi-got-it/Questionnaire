@@ -21,14 +21,14 @@ export class QuestionnaireService {
     } else {
       newId = 1;
     }
-    let tempQuestion = { id: newId, ...newQuestion, creationDate: new Date() };
+    let tempQuestion = { id: newId, ...newQuestion, creationDate: new Date(), answerStatus: false };
     tempQuestion = this.answersChecker(tempQuestion);
     this.questionnaireData.unshift(tempQuestion);
     localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
   }
 
   editQuestion(editedQuestion: IQuestionPart, editedId: number) {
-    let tempQuestion = { id: editedId, ...editedQuestion, creationDate: new Date() };
+    let tempQuestion = { id: editedId, ...editedQuestion, creationDate: new Date(), answerStatus: false };
     tempQuestion = this.answersChecker(tempQuestion);
     this.questionnaireData.forEach((item, index) => {
       if (item.id === editedId) {

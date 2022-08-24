@@ -1,1 +1,36 @@
-<p>questions-lists-page works!</p>
+<button routerLink='/management-question'>manage question page</button>
+<div class="list row-align-top">
+  <div class="list__unanswered">
+    <h2>unanswered question</h2>
+    <div  *ngFor="let unansweredQuestion of questionnaireData, let i=index "
+         [ngSwitch]="questionnaireData[i].answerStatus">
+      <div class="list__answers-container" *ngSwitchCase="false">
+        <p>{{unansweredQuestion.questionText}}</p>
+        <ul *ngIf="unansweredQuestion.type !== 'open', else openQuestion" class="list__answers">
+          <li class="row-start" *ngFor="let answer of unansweredQuestion.answers; let i=index">
+            <p>{{alphabetArray[i]}}</p>
+            <input type="checkbox">
+            <p>{{answer}}</p>
+          </li>
+        </ul>
+        <ng-template #openQuestion>
+          <template></template>
+        </ng-template>
+
+        <button (click)="unansweredQuestion.answerStatus=true">answer</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="list__answered">
+    <h2>answered question</h2>
+    <div *ngFor="let unansweredQuestion of questionnaireData, let i=index "
+         [ngSwitch]="questionnaireData[i].answerStatus">
+      <div class="list__answers-container" *ngSwitchCase="true">
+        <p>{{unansweredQuestion.questionText}}</p>
+        <button (click)="unansweredQuestion.answerStatus=false">reset</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,31 @@
+.list{
+  width: 100%;
+  &__unanswered, &__answered{
+    width: 100%;
+    padding: 20px 50px;
+  }
+  &__answers-container{
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 3px 6px 20px -2px var(--box-shadow);
+    border-radius: 16px;
+    button{
+      margin-top: 20px;
+      width: 100px;
+    }
+  }
+  &__answers{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      height: 30px;
+
+      input {
+        margin-left: 10px;
+      }
+
+    }
+  }
+}
