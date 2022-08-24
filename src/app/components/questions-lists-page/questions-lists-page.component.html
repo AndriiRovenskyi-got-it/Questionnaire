@@ -1,34 +1,48 @@
-<button routerLink='/management-question'>manage question page</button>
+<div class="row-center">
+  <button class="button button__orange" routerLink='/management-question'>manage question page</button>
+</div>
 <div class="list row-align-top">
   <div class="list__unanswered">
-    <h2>unanswered question</h2>
+    <h2 class="list__title">Unanswered question</h2>
     <div  *ngFor="let unansweredQuestion of questionnaireData, let i=index "
          [ngSwitch]="questionnaireData[i].answerStatus">
       <div class="list__answers-container" *ngSwitchCase="false">
-        <p>{{unansweredQuestion.questionText}}</p>
+        <h2>{{unansweredQuestion.questionText}}</h2>
+        <h4>question type: {{unansweredQuestion.type}}</h4>
         <ul *ngIf="unansweredQuestion.type !== 'open', else openQuestion" class="list__answers">
           <li class="row-start" *ngFor="let answer of unansweredQuestion.answers; let i=index">
             <p>{{alphabetArray[i]}}</p>
-            <input type="checkbox">
+            <input type="checkbox" (change)="addSelectAnswer($event, unansweredQuestion.id,answer)">
             <p>{{answer}}</p>
           </li>
         </ul>
+        <br>
         <ng-template #openQuestion>
-          <template></template>
+          <textarea placeholder="please write tour answer..." (input)="addOpenAnswer($event,unansweredQuestion.id)" ></textarea>
         </ng-template>
-
-        <button (click)="unansweredQuestion.answerStatus=true">answer</button>
+        <button class="button button__primary"
+                [disabled]="disableExpression(unansweredQuestion)"
+                (click)="unansweredQuestion.answerStatus=true">answer</button>
       </div>
     </div>
-
   </div>
   <div class="list__answered">
-    <h2>answered question</h2>
-    <div *ngFor="let unansweredQuestion of questionnaireData, let i=index "
+    <h2 class="list__title">Answered question</h2>
+    <div *ngFor="let answeredQuestion of questionnaireData, let i=index "
          [ngSwitch]="questionnaireData[i].answerStatus">
       <div class="list__answers-container" *ngSwitchCase="true">
-        <p>{{unansweredQuestion.questionText}}</p>
-        <button (click)="unansweredQuestion.answerStatus=false">reset</button>
+        <h2>{{answeredQuestion.questionText}}</h2>
+        <div *ngIf="answeredQuestion.type === 'open'">
+          <h4>open answer:</h4>
+          <textarea class="list__answer-textarea">{{answeredQuestion?.userAnswer}}</textarea>
+        </div>
+        <ul *ngIf="answeredQuestion.type !== 'open'" class="list__answers">
+          <h4>chosen answers:</h4>
+          <li class="row-start" *ngFor="let answer of answeredQuestion.userAnswer">
+            <p>{{answer}}</p>
+          </li>
+        </ul>
+        <button class="button button__primary" (click)="resetQuestion(answeredQuestion.id)">reset</button>
       </div>
     </div>
 

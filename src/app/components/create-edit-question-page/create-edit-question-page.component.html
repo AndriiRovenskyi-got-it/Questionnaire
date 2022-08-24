@@ -20,7 +20,10 @@
       </li>
     </ul>
     <div class="column-center">
-      <button class="create-edit__save-btn" (click)="onSubmit()" [disabled]="form.invalid" type="submit">save</button>
+      <button class="create-edit__save-btn" (click)="onSubmit()"
+              [disabled]=" form.value.type ==='open' && form.controls['questionText'].invalid
+              || form.value.type !=='open' && form.invalid "
+      >save</button>
     </div>
   </form>
 </div>

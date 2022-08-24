@@ -1,6 +1,12 @@
 @import "src/assets/styles/mixins";
+@import "src/assets/styles/buttons";
+
 :root{
-  --box-shadow:rgba(41, 49, 118, 0.18)
+  --box-shadow:20px 10px 40px -2px rgba(85, 91, 147, 0.18);
+  --primary: #131c85;
+  --orange: #dc692c;
+  --font-snow: #FFFFFF;
+  --font-disable: #656161;
 }
 * {
   box-sizing: border-box;

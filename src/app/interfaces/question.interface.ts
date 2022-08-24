@@ -5,6 +5,7 @@ export interface IQuestion {
   answers: string[];
   creationDate: Date;
   answerStatus: boolean;
+  userAnswer?: any;
 }
 
 export interface IQuestionPart {

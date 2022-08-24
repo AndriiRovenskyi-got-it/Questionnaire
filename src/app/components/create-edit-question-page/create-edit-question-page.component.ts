@@ -44,7 +44,6 @@ export class CreateEditQuestionPageComponent implements OnInit {
       });
       this.showAnswersField = history.state.question.type === 'single choice' || history.state.question.type === 'multiple choice';
     }
-
   }
 
   onSubmit() {
@@ -59,13 +58,6 @@ export class CreateEditQuestionPageComponent implements OnInit {
 
   onRadioBtnChange(type: string) {
     this.showAnswersField = type === 'single choice' || type === 'multiple choice';
-    if(type !== 'open'){
-      this.showAnswersField = true
-    }else{
-      (this.form.controls['answers'] as FormArray).controls.forEach((control)=>{
-        control.valid
-      })
-    }
   }
 
   removeAnswerControl(index: number) {
@@ -75,8 +67,8 @@ export class CreateEditQuestionPageComponent implements OnInit {
   }
 
   addAnswerControl() {
-    if ((this.form.controls['answerOptions'] as FormArray).controls.length < 5) {
-      (this.form.controls['answerOptions'] as FormArray).push(new FormControl('', Validators.required));
+    if ((this.form.controls['answers'] as FormArray).controls.length < 5) {
+      (this.form.controls['answers'] as FormArray).push(new FormControl('', Validators.required));
     }
   }
 }

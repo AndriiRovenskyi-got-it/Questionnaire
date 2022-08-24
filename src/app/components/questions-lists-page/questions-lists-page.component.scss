@@ -1,20 +1,40 @@
-.list{
+.list {
   width: 100%;
-  &__unanswered, &__answered{
+
+  &__unanswered, &__answered {
     width: 100%;
     padding: 20px 50px;
+
+    h2 {
+      margin: 10px 0;
+    }
+
+    h4 {
+      margin: 5px 0 10px 0;
+    }
+
   }
-  &__answers-container{
+
+  &__answers-container {
     padding: 20px;
     margin-top: 20px;
-    box-shadow: 3px 6px 20px -2px var(--box-shadow);
+    box-shadow: var(--box-shadow);
     border-radius: 16px;
-    button{
+
+    button {
       margin-top: 20px;
       width: 100px;
     }
+
+    textarea {
+      min-width: 100%;
+      max-height: 100px;
+      min-height: 50px;
+      outline: none;
+    }
   }
-  &__answers{
+
+  &__answers {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -25,7 +45,16 @@
       input {
         margin-left: 10px;
       }
-
     }
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__answer-textarea {
+    border: none;
+    resize: none;
+    min-height: 20px;
   }
 }
