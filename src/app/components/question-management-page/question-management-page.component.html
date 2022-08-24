@@ -5,8 +5,12 @@
   </div>
   <div class="management__question-list">
     <div class="management__question row-space-between" *ngFor="let question of questionnaireData ">
-      <p>{{question.questionText}}-{{question.type}}-{{question.creationDate|date: 'medium' }}</p>
-      <div class="management__button-div">
+      <div class="management__info-div">
+        <p>text: {{question.questionText}}</p>
+        <p>type: {{question.type}}</p>
+        <p>time: {{question.creationDate|date: 'medium' }}</p>
+      </div>
+      <div class="management__button-div row-center">
         <button [routerLink]="['/edit-question']" [state]="{question:question}">edit</button>
         <button (click)="questionnaireData = questionnaireService.deleteQuestion(question!.id)">delete</button>
       </div>
