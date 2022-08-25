@@ -1,32 +1,15 @@
 @import "src/assets/styles/mixins";
 @import "src/assets/styles/buttons";
+@import "src/assets/styles/flex-classes";
 
-:root{
-  --box-shadow:20px 10px 40px -2px rgba(85, 91, 147, 0.18);
+:root {
+  --box-shadow: 20px 10px 40px -2px rgba(85, 91, 147, 0.18);
   --primary: #131c85;
   --orange: #dc692c;
   --font-snow: #FFFFFF;
   --font-disable: #656161;
 }
+
 * {
   box-sizing: border-box;
-}
-
-.column-center{
-  @include flex(column, center, center);
-}
-.column-start{
-  @include flex(column, center, start);
-}
-.row-center{
-  @include flex(row, center, center);
-}
-.row-start{
-  @include flex(row, start, center);
-}
-.row-space-between{
-  @include flex(row, space-between, center);
-}
-.row-align-top{
-  @include flex(row, center, top);
 }

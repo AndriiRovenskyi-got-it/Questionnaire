@@ -1,5 +1,5 @@
 <div class="create-edit column-center">
-  <form class="create-edit__form" [formGroup]="form">
+  <div class="create-edit__form" [formGroup]="form">
   <button class="create-edit__close" routerLink='/management-question'><span>&#10060;</span></button>
     <div class="create-edit__text-div">
       <p>question text:</p>
@@ -25,5 +25,5 @@
               || form.value.type !=='open' && form.invalid "
       >save</button>
     </div>
-  </form>
+  </div>
 </div>

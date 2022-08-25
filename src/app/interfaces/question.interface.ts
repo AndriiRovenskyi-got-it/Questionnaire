@@ -1,11 +1,11 @@
 export interface IQuestion {
-  id: number;
+  id: string;
   questionText: string;
   type: string;
   answers: string[];
   creationDate: Date;
   answerStatus: boolean;
-  userAnswer?: any;
+  userAnswer: any;
 }
 
 export interface IQuestionPart {

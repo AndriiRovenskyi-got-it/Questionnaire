@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionnaireService } from '../../services/questionnaire.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IQuestionPart } from '../../interfaces/question.interface';
+import { alphabetEnum, types } from '../../enums/questionnarie.enums';
 
 @Component({
   selector: 'app-create-edit-question-page',
@@ -11,13 +12,17 @@ import { IQuestionPart } from '../../interfaces/question.interface';
 })
 export class CreateEditQuestionPageComponent implements OnInit {
 
-  types = ['single choice', 'multiple choice', 'open'];
-  alphabetArray = ['A', 'B', 'C', 'D', 'E'];
-  form!: FormGroup;
-  showAnswersField = false;
-  answersFormArray!: AbstractControl[];
+  public types = Object.keys(types).filter((key: any) => !isNaN(Number(types[key])));
+  public alphabetArray = Object.keys(alphabetEnum).filter((key: any) => !isNaN(Number(alphabetEnum[key])));
+  public form!: FormGroup;
+  public showAnswersField = false;
+  public answersFormArray!: AbstractControl[];
 
-  constructor(private questionnaireService: QuestionnaireService, private router: Router) {
+  private question: any;
+
+  constructor(private questionnaireService: QuestionnaireService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -30,26 +35,22 @@ export class CreateEditQuestionPageComponent implements OnInit {
       ]),
     });
 
-    this.answersFormArray = (this.form.controls['answers'] as FormArray).controls;
+    let id = this.activatedRoute.snapshot.paramMap.get('id');
 
-    if (history.state.question) {
-      this.form.controls['questionText'].setValue(history.state.question.questionText);
-      this.form.controls['type'].setValue(history.state.question.type);
-      history.state.question.answers.forEach((answer: string, index: number) => {
-        if (index < 2) {
-          this.answersFormArray[index].setValue(answer);
-        } else {
-          (this.form.controls['answers'] as FormArray).push(new FormControl(answer, Validators.required));
-        }
-      });
-      this.showAnswersField = history.state.question.type === 'single choice' || history.state.question.type === 'multiple choice';
+    if (id) {
+      this.question = this.questionnaireService.getQuestionnaireById(id);
+      this.form.controls['questionText'].setValue(this.question.questionText);
+      this.form.controls['type'].setValue(this.question.type);
+      this.form.controls['answers'] = new FormArray(this.question.answers.map((answer: IQuestionPart) => new FormControl(answer, Validators.required)));
+      this.showAnswersField = this.question.type === 'single choice' || this.question.type === 'multiple choice';
     }
+    this.answersFormArray = (this.form.controls['answers'] as FormArray).controls;
   }
 
   onSubmit() {
-    const questionObj: IQuestionPart = this.form.value;
-    if (history.state.question) {
-      this.questionnaireService.editQuestion(questionObj, history.state.question.id);
+    const questionObj: IQuestionPart = this.form.getRawValue();
+    if (this.question) {
+      this.questionnaireService.editQuestion(questionObj, this.question.id);
     } else {
       this.questionnaireService.addQuestion(questionObj);
     }

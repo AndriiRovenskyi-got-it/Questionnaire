@@ -11,8 +11,8 @@
         <p>time: {{question.creationDate|date: 'medium' }}</p>
       </div>
       <div class="management__button-div row-center">
-        <button [routerLink]="['/edit-question']" [state]="{question:question}">edit</button>
-        <button (click)="questionnaireData = questionnaireService.deleteQuestion(question!.id)">delete</button>
+        <button [routerLink]="['../edit-question',question.id]">edit</button>
+        <button (click)="onDelete(question.id)">delete</button>
       </div>
     </div>
   </div>

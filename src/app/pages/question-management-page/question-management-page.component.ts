@@ -9,16 +9,16 @@ import { IQuestion } from '../../interfaces/question.interface';
 })
 export class QuestionManagementPageComponent implements OnInit {
 
-  questionnaireData!: IQuestion[];
+  public questionnaireData: IQuestion[] = [];
 
-  constructor(public questionnaireService: QuestionnaireService) {
+  constructor(private questionnaireService: QuestionnaireService) {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('questionnaireData')) {
-      this.questionnaireData = JSON.parse(localStorage.getItem('questionnaireData')!);
-      this.questionnaireService.questionnaireData = JSON.parse(localStorage.getItem('questionnaireData')!);
-    }
-    this.questionnaireData = [...this.questionnaireService.questionnaireData];
+    this.questionnaireData = [...this.questionnaireService._questionnaireData];
+  }
+
+  onDelete(id: string) {
+    this.questionnaireData = this.questionnaireService.deleteQuestion(id);
   }
 }

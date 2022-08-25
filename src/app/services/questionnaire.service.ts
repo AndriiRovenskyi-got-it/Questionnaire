@@ -1,49 +1,63 @@
 import { Injectable } from '@angular/core';
 import { IQuestion, IQuestionPart } from '../interfaces/question.interface';
+import { LocalStorage } from './local-starage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionnaireService {
 
-  questionnaireData: IQuestion[] = [];
+  @LocalStorage(true, 'QUESTIONNAIRE', [])
+  private questionnaireData!: IQuestion[];
 
-  deleteQuestion(id: number): IQuestion[] {
+  get _questionnaireData(): IQuestion[] {
+    return this.questionnaireData;
+  }
+
+  updateQuestionnaireData(question: IQuestion) {
+    this.questionnaireData = this.questionnaireData.filter((item) => item.id !== question.id);
+    this.questionnaireData.unshift(question);
+    this.questionnaireData = [...this.questionnaireData];
+  }
+
+  getQuestionnaireById(id: string) {
+    return this.questionnaireData.find((item) => item.id == id);
+  }
+
+
+  deleteQuestion(id: string): IQuestion[] {
     this.questionnaireData = this.questionnaireData.filter(item => item.id !== id);
-    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
     return [...this.questionnaireData];
   }
 
   addQuestion(newQuestion: IQuestionPart) {
-    let newId;
-    if (this.questionnaireData.length) {
-      newId = this.questionnaireData[0].id + 1;
-    } else {
-      newId = 1;
-    }
-    let tempQuestion = { id: newId, ...newQuestion, creationDate: new Date(), answerStatus: false };
-    tempQuestion = this.answersChecker(tempQuestion);
+    let tempQuestion = this.objBuilder(newQuestion);
     this.questionnaireData.unshift(tempQuestion);
-    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
+    this.questionnaireData = [...this.questionnaireData];
   }
 
-  editQuestion(editedQuestion: IQuestionPart, editedId: number) {
-    let tempQuestion = { id: editedId, ...editedQuestion, creationDate: new Date(), answerStatus: false };
-    tempQuestion = this.answersChecker(tempQuestion);
+  editQuestion(editedQuestion: IQuestionPart, editedId: string) {
+    let tempQuestion = this.objBuilder(editedQuestion, editedId);
     this.questionnaireData.forEach((item, index) => {
       if (item.id === editedId) {
         this.questionnaireData[index] = tempQuestion;
       }
     });
-    localStorage.setItem('questionnaireData', JSON.stringify(this.questionnaireData));
+    this.questionnaireData = [...this.questionnaireData];
   }
 
-  answersChecker(tempQuestion: IQuestion) {
-    if (tempQuestion.type === 'open') {
-      tempQuestion.answers = [];
-    } else {
-      tempQuestion.answers = tempQuestion.answers.filter(answer => answer !== '');
-    }
-    return tempQuestion;
+  objBuilder(question: IQuestionPart, newId = this.generateId()): IQuestion {
+    return {
+      id: newId,
+      ...question,
+      creationDate: new Date(),
+      answerStatus: false,
+      userAnswer: []
+    };
+  }
+
+  generateId(): string {
+    return new Date().getTime().toString();
   }
 }
+
